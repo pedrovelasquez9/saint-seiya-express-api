@@ -1,4 +1,4 @@
-const saintsRoutes = require('./routes/saints');
+const saintsRoutes = require('rutas/saints');
 const express = require("express");
 const app = express();
 const port = 3000;

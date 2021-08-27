@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "link-module-alias"
+  },
+  "_moduleAliases":{
+    "controladores":"./controllers",
+    "rutas":"./routes"
   },
   "author": "Programación en Español",
   "license": "ISC",
@@ -13,6 +18,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "link-module-alias": "^1.2.0",
     "nodemon": "^2.0.12"
   }
 }
