@@ -1,22 +1,59 @@
-let saints = [{
-    saint:"Seiya", star: "Pegaso"
-},{
-    saint:"Hyoga", star: "Cisne"
-},{
-    saint:"Shiryu", star: "Dragón"
-},{
-    saint:"Ikky", star: "Fénix"
-},{
-    saint:"Shun", star: "Andrómeda"
-}];
+let saints = [
+  {
+    id: 1,
+    saint: "Seiya",
+    star: "Pegaso",
+  },
+  {
+    id: 2,
+    saint: "Hyoga",
+    star: "Cisne",
+  },
+  {
+    id: 3,
+    saint: "Shiryu",
+    star: "Dragón",
+  },
+  {
+    id: 4,
+    saint: "Ikky",
+    star: "Fénix",
+  },
+  {
+    id: 5,
+    saint: "Shun",
+    star: "Andrómeda",
+  },
+];
 
 const getSaints = (req, res) => {
-    return res.json(saints);
-}
+  return res.json(saints);
+};
 
 const createSaint = (req, res) => {
-    saints.push(req.body);
-    return res.json(saints);
-}
+  saints.push(req.body);
+  return res.json(saints);
+};
 
-module.exports = {getSaints, createSaint};
+const updateSaint = (req, res) => {
+  let parameters = req.params;
+  let { id } = parameters;
+  let saintToUpdate = saints.find((saint) => saint.id === parseInt(id));
+  let saintResult = { ...saintToUpdate, ...req.body };
+  saints = saints.map((saint) => {
+    saint.id === parseInt(id);
+    saint = saintResult;
+  });
+
+  return res.json(saintResult);
+};
+
+const deleteSaint = (req, res) => {
+  console.log(req.params);
+  let parameters = req.params;
+  let { id } = parameters;
+  saints = saints.filter((saint) => saint.id !== parseInt(id));
+  return res.json(saints);
+};
+
+module.exports = { getSaints, createSaint, updateSaint, deleteSaint };
