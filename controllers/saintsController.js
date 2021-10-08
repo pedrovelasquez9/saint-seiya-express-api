@@ -1,3 +1,4 @@
+const Saints = require("../models/saints").Saint;
 let saints = [
   {
     id: 1,
@@ -26,13 +27,14 @@ let saints = [
   },
 ];
 
-const getSaints = (req, res) => {
+const getSaints = async (req, res) => {
+  const saints = await Saints.find();
   return res.json(saints);
 };
 
-const createSaint = (req, res) => {
-  saints.push(req.body);
-  return res.json(saints);
+const createSaint = async (req, res) => {
+  const saint = await Saints.create(req.body);
+  return res.json(saint);
 };
 
 const updateSaint = (req, res) => {
