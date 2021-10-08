@@ -1,31 +1,4 @@
 const Saints = require("../models/saints").Saint;
-let saints = [
-  {
-    id: 1,
-    saint: "Seiya",
-    star: "Pegaso",
-  },
-  {
-    id: 2,
-    saint: "Hyoga",
-    star: "Cisne",
-  },
-  {
-    id: 3,
-    saint: "Shiryu",
-    star: "Dragón",
-  },
-  {
-    id: 4,
-    saint: "Ikky",
-    star: "Fénix",
-  },
-  {
-    id: 5,
-    saint: "Shun",
-    star: "Andrómeda",
-  },
-];
 
 const getSaints = async (req, res) => {
   const saints = await Saints.find();
@@ -37,24 +10,27 @@ const createSaint = async (req, res) => {
   return res.json(saint);
 };
 
-const updateSaint = (req, res) => {
+const updateSaint = async (req, res) => {
   let parameters = req.params;
   let { id } = parameters;
-  let saintToUpdate = saints.find((saint) => saint.id === parseInt(id));
-  let saintResult = { ...saintToUpdate, ...req.body };
-  saints = saints.map((saint) => {
-    saint.id === parseInt(id);
-    saint = saintResult;
-  });
+  let saintUpdateResult = [];
+  try {
+    saintUpdateResult = await Saints.findOneAndUpdate(
+      { _id: id },
+      { $set: req.body },
+      { returnOriginal: false }
+    );
+  } catch (err) {
+    console.error(err);
+  }
 
-  return res.json(saintResult);
+  return res.json(saintUpdateResult);
 };
 
-const deleteSaint = (req, res) => {
-  console.log(req.params);
+const deleteSaint = async (req, res) => {
   let parameters = req.params;
   let { id } = parameters;
-  saints = saints.filter((saint) => saint.id !== parseInt(id));
+  saints = await Saints.findOneAndDelete({ _id: id }, { rawResult: true });
   return res.json(saints);
 };
 
